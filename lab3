@@ -1,0 +1,79 @@
+N=14
+print(((N-1)%15)+1)
+
+#Написать программу, демонстрирующую работу с объектами двух типов T1 и T2, для чего создать систему соответствующих классов.  
+#Каждый объект должен иметь идентификатор (в виде произвольной строки символов) и одно или несколько полей для хранения состояния (текущего значения) объекта. 
+#Перечень типов объектов: Треугольник (Triangle), Квадрат (Quad), Прямоугольник (Rectangle), Четырехугольник (Tetragon), Пятиугольник (Pentagon). 
+import math
+
+class Shape:
+    def __init__(self, identifier):
+        self.identifier = identifier
+        self.x = 0
+        self.y = 0
+
+    def move(self, dx, dy):
+        self.x += dx
+        self.y += dy
+
+    def get_area(self):
+        raise NotImplementedError
+
+    def __str__(self):
+        return f"{self.__class__.__name__} ({self.identifier}): ({self.x}, {self.y})"
+
+class Quad(Shape):
+    def __init__(self, identifier, a, b):
+        super().__init__(identifier)
+        self.a = a
+        self.b = b
+
+    def get_area(self):
+        return self.a * self.b
+
+class Pentagon(Shape):
+    def __init__(self, identifier, a, b, c, d, e):
+        super().__init__(identifier)
+        self.a = a
+        self.b = b
+        self.c = c
+        self.d = d
+        self.e = e
+
+    def get_area(self):
+        s = (self.a + self.b + self.c + self.d + self.e) / 2
+        return math.sqrt(s * (s - self.a) * (s - self.b) * (s - self.c) * (s - self.d) * (s - self.e))
+
+def compare(shape1, shape2):
+    area1 = shape1.get_area()
+    area2 = shape2.get_area()
+    if area1 > area2:
+        return f"{shape1} is larger than {shape2}"
+    elif area1 < area2:
+        return f"{shape2} is larger than {shape1}"
+    else:
+        return f"{shape1} and {shape2} have the same area"
+
+def is_intersect(shape1, shape2):
+    # Проверяем, пересекаются ли два прямоугольника
+    if (shape1.x < shape2.x + shape2.a and shape1.x + shape1.a > shape2.x and
+        shape1.y < shape2.y + shape2.b and shape1.y + shape1.b > shape2.y):
+        return True
+    else:
+        return False
+
+# Example usage
+quad = Quad("Q1", 4, 5)
+pentagon = Pentagon("P1", 3, 4, 5, 6, 7)
+
+print(quad)
+print(pentagon)
+
+print(compare(quad, pentagon))
+print(is_intersect(quad, pentagon))
+
+quad.move(2, 3)
+pentagon.move(-1, 1)
+
+print(quad)
+print(pentagon)

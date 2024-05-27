@@ -1,0 +1,51 @@
+N=14
+print(((N-1)%10)+1)
+
+"""
+Реализовать функцию, которая будет проверять, является ли 
+введенная строка датой в формате DD/MM/YYYY, возвращаемое значение 
+True или False. Дополнительно реализовать функцию, которая выбрасывает 
+исключение о некорректном аргументе, иначе возвращает дату в формате 
+DD/MM/YYYY.
+"""
+def is_valid_date(date_str):
+    """
+    Проверяет, является ли введенная строка датой в формате DD/MM/YYYY.
+    Возвращает True, если дата корректная, иначе False.
+    """
+    try:
+        day, month, year = map(int, date_str.split('/'))
+        if 1 <= day <= 31 and 1 <= month <= 12 and 1 <= year <= 9999:
+            return True
+        else:
+            return False
+    except (ValueError, IndexError):
+        return False
+
+def parse_date(date_str):
+    """
+    Проверяет, является ли введенная строка датой в формате DD/MM/YYYY.
+    Если дата корректная, возвращает ее в формате DD/MM/YYYY.
+    Если дата некорректная, выбрасывает исключение ValueError.
+    """
+    day, month, year = map(int, date_str.split('/'))
+    if 1 <= day <= 31 and 1 <= month <= 12 and 1 <= year <= 9999:
+        return f"{day:02d}/{month:02d}/{year:04d}"
+    else:
+        raise ValueError("Некорректная дата")
+
+
+
+# Проверка корректности даты
+print(is_valid_date("01/01/2023"))  # True
+print(is_valid_date("32/01/2023"))  # False
+print(is_valid_date("01/13/2023"))  # False
+print(is_valid_date("abc/def/ghi"))  # False
+
+# Получение даты в формате DD/MM/YYYY
+try:
+    print(parse_date("01/01/2023"))  # 01/01/2023
+    print(parse_date("32/01/2023"))  # Raises ValueError
+except ValueError as e:
+    print(e)  # Некорректная дата
+

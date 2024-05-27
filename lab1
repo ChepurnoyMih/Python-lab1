@@ -1,0 +1,193 @@
+#1
+#Функция 1. Найти количество чисел, взаимно простых с заданным.
+def gcd(a, b):
+    while b:
+        a, b = b, a % b
+    return a
+
+def coprime_count(n):
+    count = 0
+    for i in range(1, n):
+        if gcd(n, i) == 1:
+            count += 1
+    return count
+
+#Функция 2. Найти сумму цифр числа, делящихся на 3.
+def sum_digits_divisible_by_3(n):
+    total = 0
+    for digit in str(n):
+        if int(digit) % 3 == 0:
+            total += int(digit)
+    return total
+
+#Функция 3. Найти делитель числа, являющийся взаимно простым с суммой цифр данного числа.
+def find_coprime_divisor(n):
+    digit_sum = sum_digits_divisible_by_3(n)
+    for i in range(2, n):
+        if gcd(n, i) == 1 and gcd(digit_sum, i) == 1:
+            return i
+    return None
+
+n = int(input("Enter number: "))
+print(coprime_count(n))
+print(sum_digits_divisible_by_3(n))
+print(find_coprime_divisor(n))
+
+
+#2 Дана строка, состоящая из символов латиницы. Необходимо проверить, упорядочены ли строчные символы этой строки по возрастанию.
+def is_sorted(s):
+    return s == ''.join(sorted(c for c in s if c.islower()))
+s = input("Enter a string: ")
+print(is_sorted(s))
+
+#3 Дана строка. Необходимо подсчитать количество букв "А" в этой строке.
+def count_a(s):
+    return s.count('A')
+s = input("Enter a string: ")
+print(count_a(s))
+
+#4 Дана строка в которой записан путь к файлу. Необходимо найти имя файла без расширения.
+import os
+
+def get_filename_without_ext(path):
+    return os.path.splitext(os.path.basename(path))[0]
+file_path = input("Enter a file path: ")
+print(get_filename_without_ext(file_path))
+
+#5 Дана строка. Необходимо найти все даты, которые описаны в виде "31 февраля 2007".
+import re
+
+def find_dates(s):
+    return re.findall(r'\d+ \w+ \d{4}', s)
+text = input("Enter a text: ")
+print(find_dates(text))
+
+#6 Дана строка. Необходимо найти все строчные символы латиницы, которые в ней используются.
+def find_lowercase_letters(s):
+    return set(c for c in s if c.islower() and c.isalpha())
+s = input("Enter a string: ")
+print(find_lowercase_letters(s))
+
+#7 Дана строка. Необходимо найти количество задействованных символов латиницы в этой строке (без дубликатов).
+def count_unique_letters(s):
+    return len(set(c for c in s if c.isalpha()))
+s = input("Enter a string: ")
+print(count_unique_letters(s))
+
+#8 Дана строка в которой записан путь к файлу. Необходимо найти имя файла без расширения.
+import os
+
+def get_filename_without_ext(path):
+    return os.path.splitext(os.path.basename(path))[0]
+file_path = input("Enter a file path: ")
+print(get_filename_without_ext(file_path))
+
+#9 Прочитать список строк с клавиатуры. Упорядочить по длине строки.
+def sort_by_length(strings):
+    return sorted(strings, key=len)
+strings = []
+num_strings = int(input("How many strings do you want to enter? "))
+for i in range(num_strings):
+    s = input(f"Enter a string {i+1}: ")
+    strings.append(s)
+print(sort_by_length(strings))
+
+#10 Дан список строк с клавиатуры. Упорядочить по количеству слов в строке.
+def sort_by_word_count(strings):
+    return sorted(strings, key=lambda s: len(s.split()))
+strings = []
+num_strings = int(input("How many strings do you want to enter?"))
+for i in range(num_strings):
+    s = input(f"Enter a string {i+1}: ")
+    strings.append(s)
+print(sort_by_word_count(strings))
+
+#11 В порядке увеличения среднего веса ASCII-кода символа строки.
+def avg_ascii_weight(s):
+    return sum(ord(c) for c in s) / len(s)
+
+def sort_by_avg_ascii(strings):
+    return sorted(strings, key=avg_ascii_weight)
+
+strings = [input(f"Enter string {i+1}: ") for i in range(int(input("How many strings? ")))]
+print(sort_by_avg_ascii(strings))
+
+#12 В порядке увеличения квадратичного отклонения среднего веса ASCII-кода символа строки от среднего веса ASCII-кода символа первой строки.
+def avg_ascii_weight(s):
+    return sum(ord(c) for c in s) / len(s)
+
+def sort_by_ascii_dev(strings):
+    avg_first = avg_ascii_weight(strings[0])
+    return sorted(strings, key=lambda s: (avg_ascii_weight(s) - avg_first) ** 2)
+
+strings = [input(f"Enter string {i+1}: ") for i in range(int(input("How many strings? ")))]
+print(sort_by_ascii_dev(strings))
+
+#13 В порядке увеличения разницы между количеством сочетаний «гласная-согласная» и «согласная-гласная» в строке.
+def vowel_consonant_diff(s):
+    vowels = 'aeiouAEIOU'
+    vc_count = sum(1 for i in range(len(s)-1) if (s[i] in vowels and s[i+1] not in vowels) or (s[i] not in vowels and s[i+1] in vowels))
+    cv_count = sum(1 for i in range(len(s)-1) if (s[i] in vowels and s[i+1] not in vowels) or (s[i] not in vowels and s[i+1] in vowels))
+    return abs(vc_count - cv_count)
+
+def sort_by_vc_diff(strings):
+    return sorted(strings, key=vowel_consonant_diff)
+
+strings = [input(f"Enter string {i+1}: ") for i in range(int(input("How many strings? ")))]
+print(sort_by_vc_diff(strings))
+
+#14 В порядке квадратичного отклонения дисперсии максимального среднего веса ASCII-кода тройки символов в строке от максимального среднего веса ASCII-кода тройки символов в первой строке.
+def max_triple_ascii_weight(s):
+    max_weight = 0
+    for i in range(len(s)-2):
+        weight = sum(ord(s[j]) for j in range(i, i+3)) / 3
+        if weight > max_weight:
+            max_weight = weight
+    return max_weight
+
+def sort_by_triple_ascii_dev(strings):
+    max_first = max_triple_ascii_weight(strings[0])
+    return sorted(strings, key=lambda s: (max_triple_ascii_weight(s) - max_first) ** 2)
+
+strings = [input(f"Enter string {i+1}: ") for i in range(int(input("How many strings? ")))]
+print(sort_by_triple_ascii_dev(strings))
+
+#15 Дан целочисленный массив. Необходимо найти индекс минимального элемента.
+def find_min_index(arr):
+    return arr.index(min(arr))
+
+arr = [int(x) for x in input("Enter numbers separated by space: ").split()]
+print(find_min_index(arr))
+
+#16 Дан целочисленный массив и интервал a..b. Необходимо найти количество элементов в этом интервале.
+def count_in_range(arr, a, b):
+    return sum(1 for x in arr if a <= x <= b)
+
+arr = [int(x) for x in input("Enter numbers separated by space: ").split()]
+a, b = map(int, input("Enter range a..b: ").split())
+print(count_in_range(arr, a, b))
+
+#17 Дан целочисленный массив. Необходимо найти количество элементов между первым и последним минимальным.
+def count_between_min(arr):
+    min_idx = [i for i, x in enumerate(arr) if x == min(arr)]
+    if len(min_idx) == 1:
+        return 0
+    return len(arr[min_idx[0]+1:min_idx[-1]])
+
+arr = [int(x) for x in input("Enter numbers separated by space: ").split()]
+print(count_between_min(arr))
+
+#18 Дан целочисленный массив и отрезок a..b. Необходимо найти количество элементов, значение которых принадлежит этому отрезку.
+def count_in_range(arr, a, b):
+    return sum(a <= x <= b for x in arr)
+
+arr = [int(x) for x in input("Enter numbers separated by space: ").split()]
+a, b = map(int, input("Enter range a..b: ").split())
+print(count_in_range(arr, a, b))
+#19 Для двух введенных списков L1 и L2 построить новый список, состоящий из элементов, встречающихся только в одном из этих списков и не повторяющихся в них.
+def unique_elements(L1, L2):
+    return list(set(L1) ^ set(L2))
+
+L1 = [int(x) for x in input("Enter elements of L1 separated by space: ").split()]
+L2 = [int(x) for x in input("Enter elements of L2 separated by space: ").split()]
+print(unique_elements(L1, L2))
